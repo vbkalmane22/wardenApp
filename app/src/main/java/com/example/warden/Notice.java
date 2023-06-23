@@ -1,5 +1,9 @@
 package com.example.warden;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,8 +15,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
@@ -24,78 +31,82 @@ import com.google.firebase.storage.UploadTask;
 
 
 public class Notice extends AppCompatActivity {
-    StorageReference storageReference;
-    Button upload;
-    EditText select_file;
-    DatabaseReference databaseReference;
+    Uri pdfuri = null;
+    Button upload_btn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice);
 
-        Button upload = findViewById(R.id.button3);
-        EditText select_file = findViewById(R.id.select_file);
-        storageReference = FirebaseStorage.getInstance().getReference();
-        databaseReference = FirebaseDatabase.getInstance().getReference("uploadPDF");
-       // upload.setEnabled(false);
-        select_file.setOnClickListener(new View.OnClickListener() {
+        upload_btn = findViewById(R.id.upload_btn);
+
+        upload_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                selectPDF();
+            public void onClick(View view) {
+                openGallery();
             }
         });
+
     }
 
-    private void selectPDF() {
+    private void openGallery() {
+
         Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.setType("application/pdf");
-        intent.setAction(intent.ACTION_GET_CONTENT);
-       // startActivityForResult(Intent.createChooser(intent, "PDF FILE SELECT"), 12);
-        startActivityForResult(Intent.createChooser(intent,"PDF FILE SELECT"),12);
+        activityResultLauncher.launch(intent);
+
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 12 && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            upload.setEnabled(true);
-            select_file.setText(data.getDataString().substring(data.getDataString().lastIndexOf("/") + 1));
-            upload.setOnClickListener(new View.OnClickListener() {
+    public ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
                 @Override
-                public void onClick(View v) {
-                    uploadPDFFileFirebase(data.getData());
-                }
-            });
-        }
-    }
+                public void onActivityResult(ActivityResult activityResult) {
+                    int result = activityResult.getResultCode();
+                    Intent data = activityResult.getData();
 
-    private void uploadPDFFileFirebase(Uri data) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("File is Loading......");
-        progressDialog.show();
+                    FirebaseStorage storage = FirebaseStorage.getInstance("gs://sahayadri-app.appspot.com");
+                    StorageReference storageRef = storage.getReference();
 
-        StorageReference reference = storageReference.child("upload" + System.currentTimeMillis() + ".pdf");
-        reference.putFile(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                while (!uriTask.isComplete()) {
-                    Uri uri = uriTask.getResult();
-                    putPDF putPDF = new putPDF(select_file.getText().toString(), uri.toString());
-                    databaseReference.child(databaseReference.push().getKey()).setValue(putPDF);
-                    Toast.makeText(Notice.this, "File is Uploaded", Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
+                    if(result == RESULT_OK){
+
+                        ProgressBar progressBar = findViewById(R.id.progressBar);
+                        progressBar.setVisibility(View.VISIBLE);
+
+                        pdfuri = data.getData();
+                        final String timestamp = "" + System.currentTimeMillis();
+                        final String messagePushID = timestamp;
+
+                        final StorageReference filepath = storageRef.child(messagePushID + "." + "pdf");
+
+                        Toast.makeText(Notice.this, filepath.getName(), Toast.LENGTH_SHORT).show();
+
+                        filepath.putFile(pdfuri).continueWithTask(new Continuation() {
+                            @Override
+                            public Object then(@NonNull Task task) throws Exception {
+                                if (!task.isSuccessful()) {
+                                    throw task.getException();
+                                }
+                                return filepath.getDownloadUrl();
+                            }
+                        }).addOnCompleteListener((OnCompleteListener<Uri>) task -> {
+                            if ((task.isSuccessful())) {
+                                progressBar.setVisibility(View.GONE);
+                                Toast.makeText(Notice.this, "Uploaded Successfully", Toast.LENGTH_SHORT).show();
+                            } else {
+                                progressBar.setVisibility(View.GONE);
+                                Toast.makeText(Notice.this, "UploadedFailed", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    }
+                    else{
+                        Toast.makeText(Notice.this,"FAILED",Toast.LENGTH_LONG).show();
+                    }
                 }
             }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
-                progressDialog.setMessage("File Upload.." + (int) progress+ "%");
-            }
-        });
-
-
-    }
+    );
 }
