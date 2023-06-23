@@ -103,7 +103,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
                            .addOnSuccessListener(new OnSuccessListener<Void>() {
                                @Override
                                public void onSuccess(Void unused) {
-                                   Toast.makeText(context, "Rejected", Toast.LENGTH_SHORT).show();
+                                   Toast.makeText(context, "Rejecte", Toast.LENGTH_SHORT).show();
                                    holder.btnReject.setEnabled(false);
                                }
                            }).addOnFailureListener(new OnFailureListener() {
