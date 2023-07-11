@@ -4,114 +4,149 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     tools:context=".Selectoption">
 
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="366dp"
-        android:layout_height="61dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="19dp"
-        android:layout_marginBottom="586dp"
-        android:background="#252525" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@drawable/back">
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="135dp"
+            android:layout_marginTop="131dp"
+            android:fontFamily="@font/space_grotesk_bold"
+            android:text="WELCOME"
+            android:textColor="#ffffff"
+            android:textSize="25sp" />
+    </LinearLayout>
+
 
     <TextView
-        android:id="@+id/textView4"
+        android:layout_width="183dp"
+        android:layout_height="169dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="196dp"
+        android:layout_marginRight="196dp"
+        android:layout_marginBottom="253dp"
+        android:background="@drawable/gradient_background" />
+
+    <TextView
+        android:layout_width="183dp"
+        android:layout_height="169dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="253dp"
+        android:background="@drawable/gradient_background" />
+
+    <TextView
+        android:layout_width="183dp"
+        android:layout_height="169dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="106dp"
+        android:layout_marginRight="106dp"
+        android:layout_marginBottom="58dp"
+        android:background="@drawable/gradient_background" />
+
+    <TextView
+        android:id="@+id/textView44"
+        android:layout_width="114dp"
+        android:layout_height="65dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="247dp"
+        android:layout_marginRight="247dp"
+        android:layout_marginBottom="348dp"
+        android:fontFamily="@font/space_grotesk_bold"
+        android:text="Check Leave"
+        android:textColor="#000000"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/textView55"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="263dp"
-        android:layout_marginBottom="597dp"
-        android:text="LEAVES"
-        android:textColor="#ffffff"
-        android:textSize="25sp"
-        app:fontFamily="@font/space_grotesk_bold" />
+        android:layout_marginEnd="27dp"
+        android:layout_marginRight="27dp"
+        android:layout_marginBottom="368dp"
+        android:fontFamily="@font/space_grotesk_bold"
+        android:text="Check Issues"
+        android:textColor="#000000"
+        android:textSize="23sp" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="113dp"
+        android:layout_marginRight="113dp"
+        android:layout_marginBottom="162dp"
+        android:fontFamily="@font/space_grotesk_bold"
+        android:text="Upload Notice"
+        android:textColor="#000000"
+        android:textSize="25sp" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="50dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="44dp"
-        android:layout_marginRight="44dp"
-        android:layout_marginBottom="588dp"
-        android:background="@drawable/arrow"
-        app:backgroundTint="#EDEAEA" />
-
-    <TextView
-        android:id="@+id/textView41"
-        android:layout_width="366dp"
-        android:layout_height="61dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="19dp"
-        android:layout_marginBottom="455dp"
-        android:background="#252525" />
-
-    <TextView
-        android:id="@+id/textView42"
-        android:layout_width="366dp"
-        android:layout_height="61dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="19dp"
-        android:layout_marginBottom="326dp"
-        android:background="#252525" />
-
-    <TextView
-        android:id="@+id/textView45"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="199dp"
-        android:layout_marginBottom="339dp"
-        android:text="Upload Notice"
-        android:textColor="#ffffff"
-        android:textSize="25sp"
-        app:fontFamily="@font/space_grotesk_bold" />
-
-    <TextView
-        android:id="@+id/textView44"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="267dp"
-        android:layout_marginBottom="470dp"
-        android:text="ISSUES"
-        android:textColor="#ffffff"
-        android:textSize="25sp"
-        app:fontFamily="@font/space_grotesk_bold" />
+        android:layout_marginEnd="230dp"
+        android:layout_marginRight="230dp"
+        android:layout_marginBottom="295dp"
+        android:background="@drawable/ic_baseline_arrow_forward_24"
+        android:backgroundTint="#000000"
+        app:backgroundTint="#000000"
+        app:iconTint="#1C0202" />
 
     <Button
         android:id="@+id/button1"
         android:layout_width="50dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="44dp"
-        android:layout_marginRight="44dp"
-        android:layout_marginBottom="460dp"
-        android:background="@drawable/arrow"
-        app:backgroundTint="#EDEAEA" />
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="230dp"
+        android:layout_marginBottom="295dp"
+        android:background="@drawable/ic_baseline_arrow_forward_24"
+        android:backgroundTint="#000000"
+        app:backgroundTint="#000000"
+        app:iconTint="#1C0202" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="50dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="44dp"
-        android:layout_marginRight="44dp"
-        android:layout_marginBottom="331dp"
-        android:background="@drawable/arrow"
-        app:backgroundTint="#EDEAEA" />
+        android:layout_marginEnd="125dp"
+        android:layout_marginRight="125dp"
+        android:layout_marginBottom="82dp"
+        android:background="@drawable/ic_baseline_arrow_forward_24"
+        android:backgroundTint="#000000"
+        app:backgroundTint="#000000"
+        app:iconTint="#1C0202" />
+
 </RelativeLayout>
